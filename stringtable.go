@@ -124,7 +124,7 @@ func (st *stringTable) String() string{
 	lengths := make([]int, 0);
 	for c := 0; c < columns; c++{
 		length := 0;
-		for r := 0; r < len(rows); r++{
+		for r := range rows{
 			for len(rows[r]) < columns{
 				item := NewItem("");
 				rows[r] = append(rows[r], &item);
