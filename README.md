@@ -1,7 +1,9 @@
 # gTable
 [jTable](https://krake.one/table) rewritten in **Go**!  
 
-## Examples
+## Usage
+Check the [GoDoc](https://godoc.org/github.com/LEGOlord208/gtable)  
+and an example:
 ```Go
 package main;
 
