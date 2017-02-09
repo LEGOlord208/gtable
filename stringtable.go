@@ -17,7 +17,7 @@ var CORNER_ROUND = func(i int) rune{
 			return '.';
 		case CORNER_MIDDLE_HORIZONTAL:
 			fallthrough;
-		case CORNER_TOP_RIGHT:
+		case CORNER_MIDDLE_VERTICAL:
 			return '+';
 		case CORNER_BOTTOM_LEFT:
 			fallthrough;
