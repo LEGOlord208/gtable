@@ -103,9 +103,9 @@ func (st *StringTable) String() string{
 
 	rows := st.Rows();
 
-	last := len(rows) - 1;
-	for len(rows) > 0 && len(rows[last]) <= 0{
-		rows = append(rows[:last], rows[last:]...);
+	for len(rows) > 0 && len(rows[len(rows) - 1]) <= 0{
+		last := len(rows) - 1;
+		rows = append(rows[:last], rows[last+1:]...);
 	}
 
 	if(len(rows) <= 0){
