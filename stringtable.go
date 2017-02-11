@@ -26,7 +26,7 @@ var CORNER_ROUND = func(i int) rune{
 	}
 };
 
-type stringTable struct{
+type StringTable struct{
 	Corner func(i int) rune
 	Header bool
 	rows [][]*TableItem
