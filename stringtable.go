@@ -31,15 +31,15 @@ type StringTable struct{
 	Header bool
 	rows [][]*TableItem
 }
-func NewStringTable() stringTable{
-	return stringTable{
+func NewStringTable() StringTable{
+	return StringTable{
 		Corner: CORNER_PLUS,
 		Header: true,
 		rows: [][]*TableItem{ make([]*TableItem, 0) },
 	};
 }
 
-func (st *stringTable) AddItems(items ...*TableItem){
+func (st *StringTable) AddItems(items ...*TableItem){
 	index := len(st.rows) - 1;
 	col := st.rows[index];
 
@@ -48,7 +48,7 @@ func (st *stringTable) AddItems(items ...*TableItem){
 	}
 	st.rows[index] = col;
 }
-func (st *stringTable) AddStrings(items ...string){
+func (st *StringTable) AddStrings(items ...string){
 	tItems := make([]*TableItem, len(items));
 	for i, item := range items{
 		tItem := NewItem(item);
@@ -56,14 +56,14 @@ func (st *stringTable) AddStrings(items ...string){
 	}
 	st.AddItems(tItems...);
 }
-func (st *stringTable) AddRow(){
+func (st *StringTable) AddRow(){
 	st.rows = append(st.rows, make([]*TableItem, 0))
 }
-func (st *stringTable) Get(row, col int) *TableItem{
+func (st *StringTable) Get(row, col int) *TableItem{
 	return st.rows[row][col];
 }
 
-func (st *stringTable) Columns() int{
+func (st *StringTable) Columns() int{
 	columns := 0;
 
 	for _, row := range st.rows{
@@ -80,7 +80,7 @@ func max(i1, i2 int) int{
 	}
 }
 
-func (st *stringTable) Rows() [][]*TableItem{
+func (st *StringTable) Rows() [][]*TableItem{
 	var arr = make([][]*TableItem, len(st.rows));
 	for i := range st.rows{
 		arr[i] = make([]*TableItem, len(st.rows[i]));
@@ -89,7 +89,7 @@ func (st *stringTable) Rows() [][]*TableItem{
 
 	return arr;
 }
-func (st *stringTable) Each(handler func(*TableItem)){
+func (st *StringTable) Each(handler func(*TableItem)){
 	for _, row := range st.rows{
 		for _, col := range row{
 			handler(col);
@@ -97,7 +97,7 @@ func (st *stringTable) Each(handler func(*TableItem)){
 	}
 }
 
-func (st *stringTable) String() string{
+func (st *StringTable) String() string{
 	s := "";
 	n := "\n";
 
