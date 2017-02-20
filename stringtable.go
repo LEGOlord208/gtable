@@ -26,11 +26,15 @@ var CORNER_ROUND = func(i int) rune{
 	}
 };
 
+// A string table object.
+// Please initiate using the NewStringTable() function
 type StringTable struct{
 	Corner func(i int) rune
 	Header bool
 	rows [][]*TableItem
 }
+
+// Creates a new string table with all default values.
 func NewStringTable() StringTable{
 	return StringTable{
 		Corner: CORNER_PLUS,
@@ -39,6 +43,7 @@ func NewStringTable() StringTable{
 	};
 }
 
+// Add items to table.
 func (st *StringTable) AddItems(items ...*TableItem){
 	index := len(st.rows) - 1;
 	col := st.rows[index];
@@ -48,6 +53,8 @@ func (st *StringTable) AddItems(items ...*TableItem){
 	}
 	st.rows[index] = col;
 }
+
+// Create items by label and add them to the table.
 func (st *StringTable) AddStrings(items ...string){
 	tItems := make([]*TableItem, len(items));
 	for i, item := range items{
@@ -56,13 +63,18 @@ func (st *StringTable) AddStrings(items ...string){
 	}
 	st.AddItems(tItems...);
 }
+
+// Break the table and continue to the next row.
 func (st *StringTable) AddRow(){
 	st.rows = append(st.rows, make([]*TableItem, 0))
 }
+
+// Get a column from the table.
 func (st *StringTable) Get(row, col int) *TableItem{
 	return st.rows[row][col];
 }
 
+// Count table column length.
 func (st *StringTable) Columns() int{
 	columns := 0;
 
@@ -80,6 +92,7 @@ func max(i1, i2 int) int{
 	}
 }
 
+// Return all rows in the table
 func (st *StringTable) Rows() [][]*TableItem{
 	var arr = make([][]*TableItem, len(st.rows));
 	for i := range st.rows{
@@ -89,6 +102,10 @@ func (st *StringTable) Rows() [][]*TableItem{
 
 	return arr;
 }
+
+// Execute 'handler' for every table item.
+// Items may be modified.
+// Useful for setting global properties.
 func (st *StringTable) Each(handler func(*TableItem)){
 	for _, row := range st.rows{
 		for _, col := range row{
@@ -97,6 +114,7 @@ func (st *StringTable) Each(handler func(*TableItem)){
 	}
 }
 
+// Create the ASCII table!
 func (st *StringTable) String() string{
 	s := "";
 	n := "\n";
