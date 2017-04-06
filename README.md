@@ -1,6 +1,12 @@
 # gTable
 [jTable](https://krake.one/table) rewritten in **Go**!  
 
+### Used
+Here are some examples of where gTable is used.
+
+- [DiscordConsole](https://github.com/LEGOlord208/DiscordConsole) uses CmdTable to show a bunch of values nicely.
+- [CmdTable](https://github.com/LEGOlord208/CmdTable) uses CmdTable to generate a table based on parameters.
+
 ## Usage
 Check the [GoDoc](https://godoc.org/github.com/LEGOlord208/gtable)  
 and an example:
