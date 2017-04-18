@@ -45,22 +45,22 @@ func NewStringTable() StringTable {
 }
 
 // Add items to table.
-func (st *StringTable) AddItems(items ...*TableItem) {
+func (st *StringTable) AddItems(items ...TableItem) {
 	index := len(st.rows) - 1
 	col := st.rows[index]
 
 	for _, item := range items {
-		col = append(col, item)
+		col = append(col, &item)
 	}
 	st.rows[index] = col
 }
 
 // Create items by label and add them to the table.
 func (st *StringTable) AddStrings(items ...string) {
-	tItems := make([]*TableItem, len(items))
+	tItems := make([]TableItem, len(items))
 	for i, item := range items {
 		tItem := NewItem(item)
-		tItems[i] = &tItem
+		tItems[i] = tItem
 	}
 	st.AddItems(tItems...)
 }
