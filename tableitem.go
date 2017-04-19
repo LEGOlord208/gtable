@@ -4,7 +4,7 @@ import (
 	"math"
 )
 
-// This is an item in the table.
+// TableItem is an item in the table.
 // Please use NewItem to instansiate.
 type TableItem struct {
 	Text         string
@@ -14,18 +14,18 @@ type TableItem struct {
 	Center       bool
 }
 
-// Create a new table item.
-func NewItem(text string) TableItem {
-	return TableItem{Text: text}
+// NewItem creates a new table item.
+func NewItem(text string) *TableItem {
+	return &TableItem{Text: text}
 }
 
-// Set both paddings (left and right)
+// Padding sets both paddings (left and right)
 func (ti *TableItem) Padding(pad int) {
 	ti.PaddingLeft = pad
 	ti.PaddingRight = pad
 }
 
-// Retrieve the size of the text.
+// TextSize retrieves the size of the text.
 func (ti TableItem) TextSize() int {
 	width := ti.Width
 	if width <= 0 {
@@ -34,12 +34,12 @@ func (ti TableItem) TextSize() int {
 	return width
 }
 
-// Retrieve the total item size.
+// Size retrieves the total item size.
 func (ti TableItem) Size() int {
 	return ti.PaddingLeft + ti.TextSize() + ti.PaddingRight
 }
 
-// Print out the table item.
+// String prints out the table item.
 // Used in StringTable#String.
 func (ti TableItem) String() string {
 	s := ""

@@ -1,33 +1,40 @@
 package gtable
 
+// These values specify what corner we're talking
+// about in StringTable#Corner.
 const (
-	CORNER_TOP_LEFT = iota
-	CORNER_TOP_RIGHT
-	CORNER_BOTTOM_LEFT
-	CORNER_BOTTOM_RIGHT
-	CORNER_MIDDLE_HORIZONTAL
-	CORNER_MIDDLE_VERTICAL
+	CornerTopLeft = iota
+	CornerTopRight
+	CornerBottomLeft
+	CornerBottomRight
+	CornerMiddleHorizontal
+	CornerMiddleVertical
 )
 
-var CORNER_PLUS = func(i int) rune {
+// CornerPlus is a corner function
+// which uses the + symbol as corner
+var CornerPlus = func(i int) rune {
 	return '+'
 }
-var CORNER_ROUND = func(i int) rune {
+
+// CornerRound is a corner function
+// which makes the generated table look round
+var CornerRound = func(i int) rune {
 	switch i {
 	default:
 		return '.'
-	case CORNER_MIDDLE_HORIZONTAL:
+	case CornerMiddleHorizontal:
 		fallthrough
-	case CORNER_MIDDLE_VERTICAL:
+	case CornerMiddleVertical:
 		return '+'
-	case CORNER_BOTTOM_LEFT:
+	case CornerBottomLeft:
 		fallthrough
-	case CORNER_BOTTOM_RIGHT:
+	case CornerBottomRight:
 		return '\''
 	}
 }
 
-// A string table object.
+// StringTable is the table object.
 // Please initiate using the NewStringTable() function
 type StringTable struct {
 	Corner func(i int) rune
@@ -35,29 +42,29 @@ type StringTable struct {
 	rows   [][]*TableItem
 }
 
-// Creates a new string table with all default values.
+// NewStringTable creates a new string table with all default values.
 func NewStringTable() StringTable {
 	return StringTable{
-		Corner: CORNER_PLUS,
+		Corner: CornerPlus,
 		Header: true,
 		rows:   [][]*TableItem{make([]*TableItem, 0)},
 	}
 }
 
-// Add items to table.
-func (st *StringTable) AddItems(items ...TableItem) {
+// AddItems adds items to the table.
+func (st *StringTable) AddItems(items ...*TableItem) {
 	index := len(st.rows) - 1
 	col := st.rows[index]
 
 	for _, item := range items {
-		col = append(col, &item)
+		col = append(col, item)
 	}
 	st.rows[index] = col
 }
 
-// Create items by label and add them to the table.
+// AddStrings creates items by label and adds them to the table.
 func (st *StringTable) AddStrings(items ...string) {
-	tItems := make([]TableItem, len(items))
+	tItems := make([]*TableItem, len(items))
 	for i, item := range items {
 		tItem := NewItem(item)
 		tItems[i] = tItem
@@ -65,17 +72,17 @@ func (st *StringTable) AddStrings(items ...string) {
 	st.AddItems(tItems...)
 }
 
-// Break the table and continue to the next row.
+// AddRow breaks the table and continues to the next row.
 func (st *StringTable) AddRow() {
 	st.rows = append(st.rows, make([]*TableItem, 0))
 }
 
-// Get a column from the table.
+// Get gets a column from the table.
 func (st *StringTable) Get(row, col int) *TableItem {
 	return st.rows[row][col]
 }
 
-// Count table column length.
+// Columns counts the maximum table column length.
 func (st *StringTable) Columns() int {
 	columns := 0
 
@@ -88,12 +95,11 @@ func (st *StringTable) Columns() int {
 func max(i1, i2 int) int {
 	if i1 >= i2 {
 		return i1
-	} else {
-		return i2
 	}
+	return i2
 }
 
-// Return all rows in the table
+// Rows returns a copy of all rows in the table
 func (st *StringTable) Rows() [][]*TableItem {
 	var arr = make([][]*TableItem, len(st.rows))
 	for i := range st.rows {
@@ -104,7 +110,7 @@ func (st *StringTable) Rows() [][]*TableItem {
 	return arr
 }
 
-// Execute 'handler' for every table item.
+// Each executes 'handler' for every table item.
 // Items may be modified.
 // Useful for setting global properties.
 func (st *StringTable) Each(handler func(*TableItem)) {
@@ -115,7 +121,7 @@ func (st *StringTable) Each(handler func(*TableItem)) {
 	}
 }
 
-// Create the ASCII table!
+// String generates the ASCII table!
 func (st *StringTable) String() string {
 	s := ""
 	n := "\n"
@@ -146,7 +152,7 @@ func (st *StringTable) String() string {
 		for r := range rows {
 			for len(rows[r]) < columns {
 				item := NewItem("")
-				rows[r] = append(rows[r], &item)
+				rows[r] = append(rows[r], item)
 			}
 			col := rows[r][c]
 
@@ -162,7 +168,7 @@ func (st *StringTable) String() string {
 		if first {
 			first = false
 		} else {
-			frame += string(st.Corner(CORNER_MIDDLE_HORIZONTAL))
+			frame += string(st.Corner(CornerMiddleHorizontal))
 		}
 
 		for i := 0; i < length; i++ {
@@ -170,7 +176,7 @@ func (st *StringTable) String() string {
 		}
 	}
 
-	s += string(st.Corner(CORNER_TOP_LEFT)) + frame + string(st.Corner(CORNER_TOP_RIGHT)) + n
+	s += string(st.Corner(CornerTopLeft)) + frame + string(st.Corner(CornerTopRight)) + n
 
 	first = true
 	for _, row := range rows {
@@ -186,12 +192,12 @@ func (st *StringTable) String() string {
 			first = false
 
 			if st.Header {
-				s += string(st.Corner(CORNER_MIDDLE_VERTICAL)) + frame + string(st.Corner(CORNER_MIDDLE_VERTICAL)) + n
+				s += string(st.Corner(CornerMiddleVertical)) + frame + string(st.Corner(CornerMiddleVertical)) + n
 			}
 		}
 	}
 
-	s += string(st.Corner(CORNER_BOTTOM_LEFT)) + frame + string(st.Corner(CORNER_BOTTOM_RIGHT))
+	s += string(st.Corner(CornerBottomLeft)) + frame + string(st.Corner(CornerBottomRight))
 
 	return s
 }
