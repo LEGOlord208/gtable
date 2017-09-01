@@ -3,7 +3,7 @@ package gtable_test
 import (
 	"fmt"
 
-	"github.com/legolord208/gtable"
+	"github.com/jD91mZM2/gtable"
 )
 
 func Example() {

@@ -15,7 +15,7 @@ package main;
 
 import (
 	"fmt"
-	"github.com/legolord208/gtable"
+	"github.com/jD91mZM2/gtable"
 )
 
 func main(){
@@ -33,6 +33,6 @@ func main(){
 ```
 
 ## Installing
-I think `go get github.com/legolord208/gtable` should do it...  
+I think `go get github.com/jD91mZM2/gtable` should do it...  
 
 # Have fun!
