@@ -1,3 +1,7 @@
+```
+Abandoned.
+```
+
 # gtable
 [jTable](https://krake.one/table) rewritten in **Go**!  
 

@@ -2,6 +2,7 @@ package gtable
 
 import (
 	"math"
+	"unicode/utf8"
 )
 
 // TableItem is an item in the table.
@@ -29,7 +30,7 @@ func (ti *TableItem) Padding(pad int) {
 func (ti TableItem) TextSize() int {
 	width := ti.Width
 	if width <= 0 {
-		width = len(ti.Text)
+		width = utf8.RuneCountInString(ti.Text)
 	}
 	return width
 }
@@ -50,10 +51,10 @@ func (ti TableItem) String() string {
 	width := ti.Width
 	text := ti.Text
 
-	if width > 0 && width < len(text) {
+	if width > 0 && width < utf8.RuneCountInString(text) {
 		text = text[:width]
 	}
-	width -= len(text)
+	width -= utf8.RuneCountInString(text)
 
 	if width > 0 && ti.Center {
 		half := int(math.Floor(float64(width) / 2.0))
